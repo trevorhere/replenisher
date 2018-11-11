@@ -1,0 +1,13 @@
+// trevor userid: 5be75de95d59673b48589c7a
+
+  mutation CreateTeam($name:String, $leaderID:ID){
+    createTeam(name:$name, leaderID: $leaderID){
+      id
+      name
+      leader {
+        id
+        email
+      }
+
+    }
+  }
