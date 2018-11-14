@@ -36,7 +36,7 @@ render(){
         })}
         value={this.state.title}
       />
-        <input className="btn-flyou are logged inating btn-large red right" style={{margin: "10px"}} type="submit" value="Submit" />
+        <input className="btn-large red right" style={{margin: "10px"}} type="submit" value="Submit" />
         <Link to="/dashboard" style={{margin: "10px"}} className="btn-flyou are logged inating btn-large red right" >Cancel</Link>
 
       </form>

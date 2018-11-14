@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-import { graphql } from 'react-apollo';
-import query from '../gql/queries/CurrentUser';
-import mutation from '../gql/mutations/Signup';
+import {graphql} from 'react-apollo';
+import mutation from '../gql/mutations/CreateUser';
+import query from '../gql/queries/fetchTeam';
+import { Link } from 'react-router-dom';
 
-class SignupForm extends Component {
+
+
+class CreateUser extends Component {
   constructor(props){
     super(props)
 
@@ -18,20 +21,21 @@ class SignupForm extends Component {
   onSubmit(event){
     event.preventDefault();
     const {email, password, name, position} = this.state;
+    const teamID = this.props.match.params.teamID;
     console.log('state', this.state);
     this.props.mutate({
-      variables: {email, password, name, position},
+      variables: {email, password, name, position,teamID },
       refetchQueries: [{ query }]
     })
 
-    this.props.history.push('/dashboard');
+    this.props.history.push(`/dashboard/team/${this.props.match.params.teamID}`);
 
   }
 
   render(){
     return (
       <div>
-      <h3>Signup</h3>
+      <h3>Create User</h3>
       <form onSubmit={this.onSubmit.bind(this)} className="col s6">
         <div className="input-field">
         <input
@@ -72,6 +76,4 @@ class SignupForm extends Component {
   }
 }
 
-export default graphql(query)(
-  graphql(mutation)(SignupForm)
-  );
+export default graphql(mutation)(CreateUser);

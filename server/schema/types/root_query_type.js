@@ -31,7 +31,7 @@ const RootQueryType = new GraphQLObjectType({
     },
     team: {
       type: TeamType,
-      args: {teamID: {type: new GraphQLNonNull(GraphQLID)}},
+      args: {teamID: {type: GraphQLID }},
         resolve(parentValue, {teamID}){
           return Team.findById(teamID);
         }

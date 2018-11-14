@@ -62,7 +62,7 @@ class ViewTeam extends Component{
             { this.renderTeam(team)}
             </ul>
             <Link
-                to={`${this.props.match.url}/AddUser`}
+                to={`${this.props.match.url}/createuser`}
                 className="btn-flyou are logged inating btn-large red right"
               >
                 Add Member To Team

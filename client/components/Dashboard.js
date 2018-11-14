@@ -46,7 +46,7 @@ class Dashboard extends Component {
         </ul>
         <Link
             to="/dashboard/createlist"
-            className="btn-flyou are logged inating btn-large red right"
+            className="btn-large red right"
           >
             Create List
             {/* <i className="material-icons" >add</i> */}

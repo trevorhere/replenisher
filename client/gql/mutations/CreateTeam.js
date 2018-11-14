@@ -4,11 +4,7 @@ export default gql`
 mutation CreateTeam($name: String, $leaderID: ID){
   createTeam(name:$name, leaderID: $leaderID){
     id
-    leader{
-      id
-      email
-      name
-    }
+    name
   }
 }
 `;

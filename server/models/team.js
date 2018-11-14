@@ -21,6 +21,20 @@ TeamSchema.statics.fetchMembers = function(id){
     .then(team => team.members);
 }
 
+TeamSchema.statics.createUser = function(email, password, name, position, teamID){
+  const User = mongoose.model('user');
+
+  return this.findById(teamID)
+  .then(team => {
+    const user = new User({email, password, name, position, team})
+    team.members.push(user)
+
+            return Promise.all([user.save(), team.save()])
+          .then(([user, team]) => user);
+
+  })
+}
+
 // ListSchema.statics.addListItem = function(id, content ){
 //   const ListItem = mongoose.model('listItem');
 

@@ -65,11 +65,7 @@ const Root = () => {
   return (
     <ApolloProvider client={client}>
       <HashRouter>
-        <Route path="/" component={App}>
-          {/* <Route path="login" component={LoginForm} />
-          <Route path="signup" component={SignupForm} />
-          <Route path="dashboard" component={requireAuth(Dashboard)} /> */}
-        </Route>
+        <Route path="/" component={App}></Route>
       </HashRouter>
     </ApolloProvider>
   );
