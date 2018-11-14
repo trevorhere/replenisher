@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from './Header';
-import Test from './Test';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import requireAuth from './requireAuth';
@@ -22,6 +21,9 @@ import CreateTeam from './CreateTeam';
 import CreateUser from './CreateUser';
 import ViewUser from './ViewUser';
 
+import HomePage from './HomePage';
+
+
 
 
 
@@ -32,7 +34,6 @@ const App = (props) => {
     <div className="container">
       <Header />
       < Switch>
-          <Route path="/test" component={Test} />
           <Route path="/login" component={LoginForm} />
           <Route path="/signup" component={SignupForm} />
           <Route path="/dashboard/team/:teamID/user/:userID" component={requireAuth(ViewUser)} />
@@ -44,6 +45,7 @@ const App = (props) => {
           <Route path="/dashboard/list/:listID" component={requireAuth(ViewList)} />
           <Route path="/dashboard/createlist" component={requireAuth(CreateList)} />
           <Route path="/dashboard" component={requireAuth(Dashboard)} />
+          <Route path="/" component= {HomePage}/>
       </ Switch>
     </div>
   );

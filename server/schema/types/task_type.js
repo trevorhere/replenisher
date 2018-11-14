@@ -4,6 +4,7 @@ const { GraphQLObjectType,
   GraphQLString,
   GraphQLID,
   GraphQLList,
+  GraphQLInt,
 } = graphql;
 
 const Task = mongoose.model('task');
@@ -14,9 +15,10 @@ const TaskType = new GraphQLObjectType({
     id: { type: GraphQLID },
     content: { type: GraphQLString },
     status: { type: GraphQLString },
-    priority: {type: GraphQLString},
+    priority: {type: GraphQLInt},
     rank: { type: GraphQLString },
-    duration: { type: GraphQLString },
+    durationHours: { type: GraphQLInt },
+    durationMinutes: { type: GraphQLInt },
     notes: { type: GraphQLString },
     feedback: { type: GraphQLString },
     started: {type: GraphQLString},

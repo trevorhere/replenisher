@@ -53,7 +53,7 @@ class Header extends Component {
     return (
       <nav>
         <div className="nav-wrapper">
-          <Link to="/dashboard" style={{paddingLeft:"10px"}} className="brand-logo left">   Replenisher</Link>
+          <Link to="/" style={{paddingLeft:"10px"}} className="brand-logo left">   Replenisher</Link>
           <ul className="right">
             {this.renderButtons()}
           </ul>

@@ -28,7 +28,8 @@ ListSchema.statics.createTask = function(
       priority,
       started,
       finished,
-      duration,
+      durationHours,
+      durationMinutes,
       notes
       ){
   const Task = mongoose.model('task');
@@ -43,7 +44,8 @@ ListSchema.statics.createTask = function(
           priority,
           started,
           finished,
-          duration,
+          durationHours,
+          durationMinutes,
           notes })
         list.tasks.push(task)
         return Promise.all([task.save(), list.save()])

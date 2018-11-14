@@ -22,7 +22,9 @@ query List($listID:ID!){
         content
         status
         rank
-        duration
+        durationHours
+        durationMinutes
+        priority
         notes
         feedback
         started

@@ -64,19 +64,19 @@ class ViewTask extends Component{
             <div>
             <div style={style} className="">
             <h3>Task: {task.content}</h3>
-            status: {task.status}
+            Status: {task.status}
             <br/>
-            priority: {task.priority}
+            Priority: {task.priority}
             <br/>
-            duration: {task.duration}
+            Estimated Duration:  {task.durationHours}Hr {task.durationMinutes}Min
             <br/>
-            notes: {task.notes}
+            Notes: {task.notes}
             <br/>
-            feedback: {task.feedback}
+            Feedback: {task.feedback}
             <br/>
-            started: {task.started}
+            Started: {task.started}
             <br/>
-            finished: {task.finished}
+            Finished: {task.finished}
             <br/>
             <br/>
             <br/>

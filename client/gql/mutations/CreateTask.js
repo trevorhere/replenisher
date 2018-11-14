@@ -7,10 +7,11 @@ export default gql`
   $status: String,
   $creatorID: ID,
   $rank: String,
-  $priority:String,
+  $priority:Int,
   $started:String,
   $finished:String,
-  $duration:String,
+  $durationHours:Int,
+  $durationMinutes:Int,
   $notes:String
 
 	){
@@ -23,7 +24,8 @@ export default gql`
   	priority:$priority,
   	started:$started,
   	finished:$finished,
-  	duration:$duration,
+  	durationHours:$durationHours,
+  	durationMinutes:$durationMinutes,
   	notes:$notes
   	){
   	id

@@ -8,7 +8,8 @@ query Task($taskID:ID!){
     status
     priority
     rank
-    duration
+    durationHours
+    durationMinutes
     notes
     feedback
     started

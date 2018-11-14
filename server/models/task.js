@@ -11,7 +11,7 @@ const TaskSchema = new Schema({
   rank: { type: String },
   notes: { type: String },
   feedback: { type: String },
-  priority: {type: String},
+  priority: {type: Number},
   creator: {
     type: Schema.Types.ObjectId,
     ref: 'user'
@@ -22,7 +22,8 @@ const TaskSchema = new Schema({
   },
   started: {type: String},
   finished: {type: String},
-  duration: { type: String }
+  durationHours: { type: Number },
+  durationMinutes: { type: Number }
 });
 
 

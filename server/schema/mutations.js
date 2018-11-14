@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLID
+  GraphQLID,
+  GraphQLInt
 } = graphql;
 
 const UserType = require('./types/user_type');
@@ -100,10 +101,11 @@ const mutation = new GraphQLObjectType({
         status: { type: GraphQLString},
         creatorID: { type: GraphQLID },
         rank: {type: GraphQLString},
-        priority: {type: GraphQLString},
+        priority: {type: GraphQLInt},
         started: {type: GraphQLString},
         finished: {type: GraphQLString},
-        duration: {type: GraphQLString},
+        durationHours: {type: GraphQLInt},
+        durationMinutes: {type: GraphQLInt},
         notes: { type: GraphQLString}
       },
       resolve(parentValue, {
@@ -115,7 +117,8 @@ const mutation = new GraphQLObjectType({
         priority,
         started,
         finished,
-        duration,
+        durationHours,
+        durationMinutes,
         notes
 
       }){
@@ -128,7 +131,8 @@ const mutation = new GraphQLObjectType({
           priority,
           started,
           finished,
-          duration,
+          durationHours,
+          durationMinutes,
           notes
           )
       }

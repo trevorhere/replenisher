@@ -20,10 +20,10 @@ class CreateTask extends Component {
       started: "N/A",
       finished: "N/A",
       recuring: false,
-      priority: 0,
+      priority: 5,
       duration: 'test',
-      durationHours: 0,
-      durationMinutes: 0,
+      durationHours: 5,
+      durationMinutes: 5,
     }
   }
 
@@ -39,10 +39,11 @@ class CreateTask extends Component {
         listID: this.props.match.params.listID,
         status: this.state.status,
         creatorID: this.props.data.user.id,
-        priority: this.state.priority.toString(),
+        priority: this.state.priority,
         started: this.state.started,
         finished: this.state.finished,
-        duration: this.state.duration,
+        durationHours: this.state.durationHours,
+        durationMinutes: this.state.durationMinutes,
         notes: this.state.notes,
 
       },
@@ -126,7 +127,7 @@ render(){
       <input
         type="Number"
         onChange={event => this.setState({
-          priority: event.target.value
+          priority: Number(event.target.value)
         })}
         value={this.state.priority}
       />
@@ -151,7 +152,7 @@ render(){
         type="Number"
 
         onChange={event => this.setState({
-          durationHours: event.target.value
+          durationHours: Number(event.target.value)
         })}
         value={this.state.durationHours}
       />
@@ -160,7 +161,7 @@ render(){
       <input
         type="Number"
         onChange={event => this.setState({
-          durationMinutes: event.target.value
+          durationMinutes: Number(event.target.value)
         })}
         value={this.state.durationMinutes}
       />

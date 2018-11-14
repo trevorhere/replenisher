@@ -20,6 +20,8 @@ class ViewList extends Component{
     }
   }
 
+
+
   changeTaskStatus(taskID, status){
     this.props.mutate({
       variables: { taskID, status }})
@@ -27,11 +29,13 @@ class ViewList extends Component{
 
   renderTasks(tasks, refetch){
     return ( tasks ?
-      tasks.map(({id, content, status }) => {
+      tasks.map(({id, content, status, priority, durationHours, durationMinutes }) => {
       return (
       <li key={id} className="collection-item ">
         <Link to={`/dashboard/list/${this.props.match.params.listID}/task/${id}`} >{content}</Link>
         <div style={style} className="right">
+            <span style={{paddingRight: "10px"}}>priority: {priority} | </span>
+            <span style={{paddingRight: "10px"}}>{durationHours}Hr {durationMinutes}Min | </span>
             status: {status}
             { status == "complete" ? <div></div> :
             <div>
@@ -60,6 +64,25 @@ class ViewList extends Component{
         }) : null )
       }
 
+    sortPriority(tasks){
+        return tasks.sort(function(a,b){
+          return b.priority - a.priority;
+        })
+      }
+
+
+    sortDuration(tasks){
+      return tasks.sort(function(a,b){
+        let bDurration = ((b.durationHours * 60) + b.durationMinutes);
+        let aDurration = ((a.durationHours * 60) + a.durationMinutes);
+
+        if(aDurration > bDurration){
+          return 1
+        } else {
+          return -1
+        }
+      })
+    }
 
 
   render(){
@@ -84,7 +107,17 @@ class ViewList extends Component{
          const completeTasks =  this.filteredTasks(list, "complete");
 
          const renderPending = pendingTasks.length ? (
+
+          // filter first by duration
+          // filter then by priority
+
+
+
+
           <div>
+            {this.sortDuration(pendingTasks)}
+            {this.sortPriority(pendingTasks)}
+
              <h4>Pending Tasks:</h4>
              <ul className="collection">
                  {this.renderTasks(pendingTasks, refetch)}
