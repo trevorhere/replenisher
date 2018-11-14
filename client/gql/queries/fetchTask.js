@@ -8,6 +8,8 @@ query Task($taskID:ID!){
     status
     priority
     rank
+    timeDue
+    dueDate
     durationHours
     durationMinutes
     notes

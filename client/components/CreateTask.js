@@ -17,8 +17,10 @@ class CreateTask extends Component {
       status: "pending",
       notes: '',
       value: 'select',
-      started: "N/A",
-      finished: "N/A",
+      dueDate: '',
+      timeDue: '',
+      started: 'N/A',
+      finished: 'N/A',
       recuring: false,
       priority: 5,
       duration: 'test',
@@ -40,6 +42,8 @@ class CreateTask extends Component {
         status: this.state.status,
         creatorID: this.props.data.user.id,
         priority: this.state.priority,
+        dueDate: this.state.dueDate,
+        timeDue: this.state.timeDue,
         started: this.state.started,
         finished: this.state.finished,
         durationHours: this.state.durationHours,
@@ -62,31 +66,29 @@ class CreateTask extends Component {
       })
   }
 
-  handleSelector(event) {
-    event.preventDefault();
-    if(event.target.value == "completed"){
+  handleSelector(status) {
+    if(status == "complete"){
       this.setState({
-        status: event.target.value,
+        status,
         started: moment().format('MMMM Do YYYY, h:mm:ss a'),
-        completed: moment().format('MMMM Do YYYY, h:mm:ss a')
+        finished: moment().format('MMMM Do YYYY, h:mm:ss a')
       })
-    } else if(event.target.value == "underway"){
+    } else if(status == "underway"){
       this.setState({
-        status: event.target.value,
+        status,
         started: moment().format('MMMM Do YYYY, h:mm:ss a'),
-        completed: 'N/A'
-
+        finished: 'N/A'
       })
-    } else if(event.target.value == "pending"){
+    } else if(status == "pending"){
       this.setState({
-        status: event.target.value,
-        completed:  'N/A',
+        status,
+        finished: 'N/A',
         started: 'N/A'
       });
     } else {
       this.setState({
         status: "pending",
-        completed:  'N/A',
+        finished:  'N/A',
         started: 'N/A'
       });
     }
@@ -106,10 +108,9 @@ render(){
       />
       <label>Status: (please choose between 'pending', 'underway', or 'complete') </label>
       <input
-        onChange={event => this.setState({
+        onChange={event => {this.setState({
           status: event.target.value
-        })}
-        value={this.state.status}
+        }); this.handleSelector(event.target.value)}}
       />
       <label>Priority:</label>
       <br/>
@@ -132,6 +133,7 @@ render(){
         value={this.state.priority}
       />
 
+
       <br/>
       {/* <label>Expected Duration:
         <select className="browser-default" value={this.state.duration} onChange={this.handleSelector.bind(this)}>
@@ -146,6 +148,24 @@ render(){
         })}
         value={this.state.status}
       /> */}
+      <label>Expected Due Date:</label>
+      <br/>
+       <label>MM DD YYYY</label>
+      <input
+        onChange={event => this.setState({
+          dueDate: event.target.value
+        })}
+        value={this.state.dueDate}
+      />
+      <label>Expected Time Due:</label>
+      <br/>
+       <label>HH MM SS</label>
+      <input
+        onChange={event => this.setState({
+          timeDue: event.target.value
+        })}
+        value={this.state.timeDue}
+      />
         <br/>
       <label>Duration - Hours:</label>
       <input

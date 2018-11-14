@@ -20,6 +20,8 @@ const TaskSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'user'
   },
+  dueDate: {type:String},
+  timeDue: {type:String},
   started: {type: String},
   finished: {type: String},
   durationHours: { type: Number },
@@ -27,10 +29,12 @@ const TaskSchema = new Schema({
 });
 
 
-TaskSchema.statics.changeTaskStatus = function(taskID, status){
+TaskSchema.statics.changeTaskStatus = function(taskID, status, started, finished){
   return this.findById(taskID)
     .then(task => {
         task.status = status;
+        task.started = started;
+        task.finished = finished;
         return Promise.all(task.save())
         .then(task => task);
       })

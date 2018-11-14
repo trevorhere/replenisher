@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { graphql, Query } from 'react-apollo';
 import query from '../gql/queries/fetchTeam';
+import Loading from './Loading';
 
 const style = {
 //  right: '0'
@@ -51,7 +52,7 @@ class ViewTeam extends Component{
 
 
           if (loading) {
-            return <div>Loading...</div>;
+            return (<Loading loading={loading}/>);
           } else if (error) {
             return <div>Error: {error.message}</div>;
           }

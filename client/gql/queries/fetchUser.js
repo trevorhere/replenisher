@@ -7,6 +7,10 @@ export default gql`
       name
       position
       email
+      lists{
+        id
+        name
+      }
     }
   }
 

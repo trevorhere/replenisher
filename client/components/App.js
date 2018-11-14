@@ -22,6 +22,7 @@ import CreateUser from './CreateUser';
 import ViewUser from './ViewUser';
 
 import HomePage from './HomePage';
+import AssignList from './AssignList';
 
 
 
@@ -40,6 +41,7 @@ const App = (props) => {
           <Route path="/dashboard/team/:teamID/createuser" component={requireAuth(CreateUser)} />
           <Route path="/dashboard/team/:teamID" component={requireAuth(ViewTeam)} />
           <Route path="/dashboard/createteam" component={requireAuth(CreateTeam)} />
+          <Route path="/dashboard/list/:listID/assignlist" component={requireAuth(AssignList)} />
           <Route path="/dashboard/list/:listID/task/:taskID" component={requireAuth(ViewTask)} />
           <Route path="/dashboard/list/:listID/createtask" component={requireAuth(CreateTask)} />
           <Route path="/dashboard/list/:listID" component={requireAuth(ViewList)} />

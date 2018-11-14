@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { graphql, Query } from 'react-apollo';
 import query from '../gql/queries/fetchUser';
+import Loading from './Loading';
 
 const style = {
      border:'2px solid grey',
@@ -11,11 +12,20 @@ const style = {
 
 
 class ViewUser extends Component{
-  render(){
 
+  renderLists(lists){
+   return  lists.map(({id, name}) => {
+      return (
+        <li key={id}>{name}</li>
+      )
+    })
+  }
+
+
+  render(){
     console.log(this.props);
     const { userID } = this.props.data;
-    if (!userID) { return <div>Loading...</div>; }
+    if (!userID) { return (<Loading loading={userID}/>); }
 
     return (
         <div>
@@ -26,6 +36,20 @@ class ViewUser extends Component{
           <br/>
           Position: {userID.position}
           <br/>
+          <div>
+            {userID.lists.length ? <div>
+            <ul>
+              Lists:
+              {this.renderLists(userID.lists)}
+            </ul>
+            </div> : <div></div>}
+          </div>
+          <div style={{marginTop: "10px"}}>
+          <Link
+          to={`/dashboard/team/${this.props.match.params.teamID}`}
+          style={{margin: "10px"}}
+          className=" btn-large red right">Back</Link>
+          </div>
         </div>
       );
 

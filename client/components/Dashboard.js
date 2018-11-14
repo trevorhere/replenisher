@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import query from '../gql/queries/fetchLists';
-
-// this component should show a list of the users lists
+import { css } from 'react-emotion';
+import Loading from './Loading';
 
 class Dashboard extends Component {
 
@@ -31,11 +31,7 @@ class Dashboard extends Component {
   render(){
     console.log(this.props);
     if(this.props.data.loading){
-      return (
-        <div>
-          Loading...
-        </div>
-      )
+      return ( <Loading loading={this.props.data.loading} /> )
     }
     const { teams } = this.props.data.user;
     return (

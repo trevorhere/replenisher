@@ -21,6 +21,8 @@ const TaskType = new GraphQLObjectType({
     durationMinutes: { type: GraphQLInt },
     notes: { type: GraphQLString },
     feedback: { type: GraphQLString },
+    dueDate: {type: GraphQLString},
+    timeDue: {type: GraphQLString},
     started: {type: GraphQLString},
     finished: {type: GraphQLString},
     creator: {

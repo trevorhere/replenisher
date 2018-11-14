@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { graphql, Query } from 'react-apollo';
 import query from '../gql/queries/fetchList';
 import mutation from '../gql/mutations/ChangeTaskStatus';
+import Loading from './Loading'
+const moment = require('moment');
 
 const style = {
 //  right: '0'
@@ -21,15 +23,29 @@ class ViewList extends Component{
   }
 
 
+  changeTaskStatus(taskID, status, started, finished){
 
-  changeTaskStatus(taskID, status){
-    this.props.mutate({
-      variables: { taskID, status }})
+    if(status == "pending"){
+      this.props.mutate({
+        variables: { taskID, status, started, finished }})
+      }
+      else if(status == "underway")
+      {
+        started = moment().format('MMMM Do YYYY, h:mm:ss a');
+        this.props.mutate({
+          variables: { taskID, status, started, finished }})
+      }
+      else if(status == "complete")
+      {
+        finished = moment().format('MMMM Do YYYY, h:mm:ss a');
+        this.props.mutate({
+          variables: { taskID, status, started, finished }})
+      }
   }
 
   renderTasks(tasks, refetch){
     return ( tasks ?
-      tasks.map(({id, content, status, priority, durationHours, durationMinutes }) => {
+      tasks.map(({id, content, status, started, finished, priority, durationHours, durationMinutes }) => {
       return (
       <li key={id} className="collection-item ">
         <Link to={`/dashboard/list/${this.props.match.params.listID}/task/${id}`} >{content}</Link>
@@ -39,16 +55,27 @@ class ViewList extends Component{
             status: {status}
             { status == "complete" ? <div></div> :
             <div>
-             <i
-             className="material-icons"
-             onClick={() => {this.changeTaskStatus(id, "underway"); refetch();}}
-             style={{paddingLeft:"10px"}}
-           >add</i>
-            <i
-              className="material-icons"
-              onClick={() => {this.changeTaskStatus(id, "complete"); refetch();}}
-              style={{paddingLeft:"10px"}}
-            > done</i>
+              {status == "underway" ?
+              <div>
+                <i
+                  className="material-icons"
+                  onClick={() => {this.changeTaskStatus(id, "complete", started, finished); refetch();}}
+                  style={{paddingLeft:"10px"}}
+                > done</i>
+              </div> :
+              <div>
+                <i
+                  className="material-icons"
+                  onClick={() => {this.changeTaskStatus(id, "underway", started, finished); refetch();}}
+                  style={{paddingLeft:"10px"}}
+                 >add</i>
+                <i
+                  className="material-icons"
+                  onClick={() => {this.changeTaskStatus(id, "complete", started, finished); refetch();}}
+                  style={{paddingLeft:"10px"}}
+                > done</i>
+              </div>
+              }
             </div>
           }
 
@@ -58,7 +85,7 @@ class ViewList extends Component{
       )}) : <div> No tasks. </div> )}
 
 
-      filteredTasks(list, filter){
+    filteredTasks(list, filter){
         return (list.tasks ? list.tasks.filter(({status }) => {
           return status == filter
         }) : null )
@@ -86,7 +113,10 @@ class ViewList extends Component{
 
 
   render(){
-    console.log('props', this.props);
+    if(this.props.data.loading){
+      return (<Loading loading={this.props.data.loading}/>);
+    }
+
     return (
       <Query
         query={query}
@@ -97,7 +127,9 @@ class ViewList extends Component{
           const { list } = data;
 
           if (loading) {
-            return <div>Loading...</div>;
+            return (
+              <Loading loading={loading} />
+              );
           } else if (error) {
             return <div>Error: {error.message}</div>;
           }
@@ -107,18 +139,10 @@ class ViewList extends Component{
          const completeTasks =  this.filteredTasks(list, "complete");
 
          const renderPending = pendingTasks.length ? (
-
-          // filter first by duration
-          // filter then by priority
-
-
-
-
           <div>
-            {this.sortDuration(pendingTasks)}
-            {this.sortPriority(pendingTasks)}
-
-             <h4>Pending Tasks:</h4>
+            { console.log(this.sortDuration(pendingTasks))}
+            {console.log(this.sortPriority(pendingTasks))}
+             <h4>Pending:</h4>
              <ul className="collection">
                  {this.renderTasks(pendingTasks, refetch)}
              </ul>
@@ -127,7 +151,7 @@ class ViewList extends Component{
 
          const renderUnderway = underwayTasks.length ? (
            <div>
-              <h4>Underway Tasks:</h4>
+              <h4>Underway:</h4>
               <ul className="collection">
                   {this.renderTasks(underwayTasks, refetch)}
               </ul>
@@ -136,7 +160,7 @@ class ViewList extends Component{
 
         const renderComplete = completeTasks.length ? (
           <div>
-             <h4>Complete Tasks:</h4>
+             <h4>Complete:</h4>
              <ul className="collection">
                  {this.renderTasks(completeTasks, refetch)}
              </ul>
@@ -161,6 +185,13 @@ class ViewList extends Component{
               >
                 Create Task
                 {/* <i className="material-icons" >add</i> */}
+              </Link>
+                <Link
+                to={`${this.props.match.url}/assignlist`}
+                className="btn-large red right"
+                style={{margin: "10px"}}
+                >
+                Assign List
               </Link>
               <Link
                 to={`/dashboard`}

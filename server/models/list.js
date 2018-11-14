@@ -16,6 +16,10 @@ const ListSchema = new Schema({
   tasks: [{
     type: Schema.Types.ObjectId,
     ref: 'task'
+  }],
+  recurringTasks: [{
+    type: Schema.Types.ObjectId,
+    ref: 'recurringTasks'
   }]
 }, {usePushEach: true});
 
@@ -26,6 +30,8 @@ ListSchema.statics.createTask = function(
       creatorID,
       rank,
       priority,
+      dueDate,
+      timeDue,
       started,
       finished,
       durationHours,
@@ -42,6 +48,8 @@ ListSchema.statics.createTask = function(
           creatorID,
           rank,
           priority,
+          dueDate,
+          timeDue,
           started,
           finished,
           durationHours,
@@ -57,6 +65,21 @@ ListSchema.statics.findTasks = function(id){
   return this.findById(id)
     .populate('tasks')
     .then(list => list.tasks);
+}
+
+ListSchema.statics.assignUserToList = function(email, listID){
+  const User = mongoose.model('user');
+  return User.findOne({email})
+  .then(user => {
+    return this.findById(listID)
+    .then(list => {
+      user.lists.push(list);
+      return Promise.all([list.save(), user.save()])
+      .then(([list, user]) => user);
+
+    })
+  })
+
 }
 
 mongoose.model('list', ListSchema);

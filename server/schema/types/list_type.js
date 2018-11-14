@@ -13,6 +13,7 @@ const TaskType = require('./task_type');
 const UserType = require('./user_type');
 
 
+
 const ListType = new GraphQLObjectType({
   name: 'ListType',
   fields: () => ({
@@ -24,8 +25,8 @@ const ListType = new GraphQLObjectType({
       type: require('./user_type'),
       resolve(parentValue){
         return List.findById(parentValue).populate('leader')
-          .then(team => {
-            return team.leader;
+          .then(list => {
+            return list.leader;
           });
       }
     },
@@ -33,8 +34,8 @@ const ListType = new GraphQLObjectType({
       type: require('./user_type'),
       resolve(parentValue){
         return List.findById(parentValue).populate('owner')
-          .then(team => {
-            return team.owner;
+          .then(list => {
+            return list.owner;
           });
       }
     },
@@ -42,6 +43,15 @@ const ListType = new GraphQLObjectType({
       type: GraphQLList(TaskType),
       resolve(parentValue) {
         return List.findTasks(parentValue.id);
+      }
+    },
+    recurringTasks: {
+      type: GraphQLList( require('./recurring_task_type')),
+      resolve(parentValue) {
+        return List.findById(parentValue).populate('recurringTasks')
+          .then( list => {
+            return list.recurringTasks;
+          });
       }
     }
   })

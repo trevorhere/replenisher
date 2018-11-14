@@ -83,6 +83,16 @@ const mutation = new GraphQLObjectType({
         return Team.addExistingUser(email, teamID);
       }
     },
+    assignListToUser: {
+      type: UserType,
+      args: {
+        email : {type: GraphQLString},
+        listID: {type: GraphQLID}
+      },
+      resolve(parentValue,{email, listID}){
+        return List.assignUserToList(email, listID);
+      }
+    },
     createTeam: {
       type: TeamType,
       args: {
@@ -102,6 +112,8 @@ const mutation = new GraphQLObjectType({
         creatorID: { type: GraphQLID },
         rank: {type: GraphQLString},
         priority: {type: GraphQLInt},
+        dueDate: {type: GraphQLString},
+        timeDue: {type: GraphQLString},
         started: {type: GraphQLString},
         finished: {type: GraphQLString},
         durationHours: {type: GraphQLInt},
@@ -115,6 +127,8 @@ const mutation = new GraphQLObjectType({
         creatorID,
         rank,
         priority,
+        dueDate,
+        timeDue,
         started,
         finished,
         durationHours,
@@ -129,6 +143,8 @@ const mutation = new GraphQLObjectType({
           creatorID,
           rank,
           priority,
+          dueDate,
+          timeDue,
           started,
           finished,
           durationHours,
@@ -141,10 +157,12 @@ const mutation = new GraphQLObjectType({
       type: TaskType,
       args: {
         taskID: { type: GraphQLID },
-        status: { type: GraphQLString }
+        status: { type: GraphQLString },
+        started: { type: GraphQLString },
+        finished: { type: GraphQLString },
       },
-      resolve(parentValue, {taskID, status}){
-        return Task.changeTaskStatus(taskID, status);
+      resolve(parentValue, {taskID, status, started, finished}){
+        return Task.changeTaskStatus(taskID, status, started, finished);
       }
     },
     createList: {
