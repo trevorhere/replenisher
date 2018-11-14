@@ -89,6 +89,7 @@ class ViewList extends Component{
              <ul className="collection">
                  {this.renderTasks(pendingTasks, refetch)}
              </ul>
+             <hr/>
              </div> ) : <div></div>
 
          const renderUnderway = underwayTasks.length ? (
@@ -97,6 +98,7 @@ class ViewList extends Component{
               <ul className="collection">
                   {this.renderTasks(underwayTasks, refetch)}
               </ul>
+               <hr/>
               </div> ) : <div></div>
 
         const renderComplete = completeTasks.length ? (
@@ -105,12 +107,14 @@ class ViewList extends Component{
              <ul className="collection">
                  {this.renderTasks(completeTasks, refetch)}
              </ul>
+             <hr/>
              </div> ) : <div></div>
 
 
           return (
             <div>
             <h3>List: {list.name}</h3>
+            <hr/>
             {renderUnderway}
             {renderPending}
             {renderComplete}

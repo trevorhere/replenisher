@@ -31,9 +31,6 @@ ListSchema.statics.createTask = function(
       duration,
       notes
       ){
-  console.log('status: ', status);
-  console.log('started: ', started);
-
   const Task = mongoose.model('task');
     return this.findById(listID)
       .then(list => {
