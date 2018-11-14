@@ -52,7 +52,7 @@ class ViewTask extends Component{
       >
         {({loading, error, data }) => {
           const { task } = data;
-          console.log('task',task)
+          // console.log('task',task)
 
           if (loading) {
             return <div>Loading...</div>;

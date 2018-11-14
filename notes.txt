@@ -1,7 +1,7 @@
 // trevor userid: 5be75de95d59673b48589c7a
 
 assumptions:
-- team structure 
+- team structure
 
   mutation CreateTeam($name:String, $leaderID:ID){
     createTeam(name:$name, leaderID: $leaderID){
@@ -14,3 +14,23 @@ assumptions:
 
     }
   }
+
+
+	query Team($teamID:ID){
+    team(teamID: $teamID){
+      id
+      name
+      members{
+        id
+        name
+      }
+      leader {
+        id
+        name
+      }
+    }
+  }
+
+  {
+  "teamID": "5beb6b974ab1076f37784a30"
+}

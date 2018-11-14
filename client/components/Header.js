@@ -12,7 +12,6 @@ class Header extends Component {
       refetchQueries: [{ query }]
     });
 
-    // <Redirect to={{pathname: '/login'}}/>
     history.pushState('/login');
   }
 
@@ -54,7 +53,7 @@ class Header extends Component {
     return (
       <nav>
         <div className="nav-wrapper">
-          <Link to="/" className="brand-logo left">Home</Link>
+          <Link to="/dashboard" style={{paddingLeft:"10px"}} className="brand-logo left">   Replenisher</Link>
           <ul className="right">
             {this.renderButtons()}
           </ul>

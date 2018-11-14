@@ -20,8 +20,10 @@ class CreateTask extends Component {
       started: "N/A",
       finished: "N/A",
       recuring: false,
-      priority: "0",
-      duration: "test"
+      priority: 0,
+      duration: 'test',
+      durationHours: 0,
+      durationMinutes: 0,
     }
   }
 
@@ -37,7 +39,7 @@ class CreateTask extends Component {
         listID: this.props.match.params.listID,
         status: this.state.status,
         creatorID: this.props.data.user.id,
-        priority: this.state.priority,
+        priority: this.state.priority.toString(),
         started: this.state.started,
         finished: this.state.finished,
         duration: this.state.duration,
@@ -67,20 +69,22 @@ class CreateTask extends Component {
         started: moment().format('MMMM Do YYYY, h:mm:ss a'),
         completed: moment().format('MMMM Do YYYY, h:mm:ss a')
       })
-    }
-
-    if(event.target.value == "underway"){
+    } else if(event.target.value == "underway"){
       this.setState({
         status: event.target.value,
         started: moment().format('MMMM Do YYYY, h:mm:ss a'),
         completed: 'N/A'
 
       })
-    }
-
-    if(event.target.value == "pending"){
+    } else if(event.target.value == "pending"){
       this.setState({
         status: event.target.value,
+        completed:  'N/A',
+        started: 'N/A'
+      });
+    } else {
+      this.setState({
+        status: "pending",
         completed:  'N/A',
         started: 'N/A'
       });
@@ -120,6 +124,7 @@ render(){
       <br/>
       <label>4: Nuclear !!!              </label>
       <input
+        type="Number"
         onChange={event => this.setState({
           priority: event.target.value
         })}
@@ -140,6 +145,25 @@ render(){
         })}
         value={this.state.status}
       /> */}
+        <br/>
+      <label>Duration - Hours:</label>
+      <input
+        type="Number"
+
+        onChange={event => this.setState({
+          durationHours: event.target.value
+        })}
+        value={this.state.durationHours}
+      />
+      <br/>
+      <label>Duration - Minutes:</label>
+      <input
+        type="Number"
+        onChange={event => this.setState({
+          durationMinutes: event.target.value
+        })}
+        value={this.state.durationMinutes}
+      />
       <br/>
       <label>Notes:</label>
       <input

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-query Team($teamID:ID!){
+query Team($teamID:ID){
     team(teamID:$teamID){
       id
       name

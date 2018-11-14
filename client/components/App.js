@@ -20,6 +20,7 @@ import ViewTask from './ViewTask';
 import ViewTeam from './ViewTeam';
 import CreateTeam from './CreateTeam';
 import CreateUser from './CreateUser';
+import ViewUser from './ViewUser';
 
 
 
@@ -34,6 +35,7 @@ const App = (props) => {
           <Route path="/test" component={Test} />
           <Route path="/login" component={LoginForm} />
           <Route path="/signup" component={SignupForm} />
+          <Route path="/dashboard/team/:teamID/user/:userID" component={requireAuth(ViewUser)} />
           <Route path="/dashboard/team/:teamID/createuser" component={requireAuth(CreateUser)} />
           <Route path="/dashboard/team/:teamID" component={requireAuth(ViewTeam)} />
           <Route path="/dashboard/createteam" component={requireAuth(CreateTeam)} />

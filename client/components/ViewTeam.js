@@ -16,7 +16,7 @@ class ViewTeam extends Component{
     return ( team.members ? team.members.map(({id, name, position }) => {
       return (
       <li key={id} className="collection-item ">
-        <Link to={`/dashboard/team/${team.id}/member/${id}`} >{name}</Link>
+        <Link to={`/dashboard/team/${team.id}/user/${id}`} >{name}</Link>
         <div style={style} className="right">
         position: {position}
         </div>
@@ -47,7 +47,8 @@ class ViewTeam extends Component{
         fetchPolicy="cache-and-network"
       >
         {({loading, error, data }) => {
-          const { team } = data;
+          console.log('props',this.props)
+
 
           if (loading) {
             return <div>Loading...</div>;
@@ -55,19 +56,30 @@ class ViewTeam extends Component{
             return <div>Error: {error.message}</div>;
           }
 
+          const { team } = data;
+
+
           return (
             <div>
             <h3>Team: {team.name}</h3>
             <ul className="collection">
             { this.renderTeam(team)}
             </ul>
-            <Link
+              <div style={{marginTop: "10px"}}>
+              <Link
                 to={`${this.props.match.url}/createuser`}
-                className="btn-flyou are logged inating btn-large red right"
+                className="btn-large red right"
+                style={{margin: "10px"}}
+
               >
                 Add Member To Team
                 {/* <i className="material-icons" >add</i> */}
               </Link>
+              <Link
+                to={`/dashboard`}
+                style={{margin: "10px"}}
+                className=" btn-large red right">Back</Link>
+                </div>
           </div>
           );
         }}

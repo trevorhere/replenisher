@@ -24,7 +24,7 @@ const RootQueryType = new GraphQLObjectType({
     },
     userID: {
       type: UserType,
-      args: {userID: {type: new GraphQLNonNull(GraphQLID)}},
+      args: {userID: {type: GraphQLID}},
         resolve(parentValue, {userID}){
           return User.findById(userID);
         }
@@ -38,14 +38,14 @@ const RootQueryType = new GraphQLObjectType({
     },
     list: {
       type: ListType,
-      args: {listID: { type: new GraphQLNonNull(GraphQLID) }},
+      args: {listID: { type:GraphQLID }},
         resolve(parentValue, {listID}){
           return List.findById(listID);
         }
     },
     task: {
       type: TaskType,
-      args: {taskID: { type:  new GraphQLNonNull(GraphQLID)}},
+      args: {taskID: { type:  GraphQLID}},
       resolve(parentValue, {taskID}){
         return Task.findById(taskID);
       }

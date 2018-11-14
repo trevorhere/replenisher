@@ -72,6 +72,16 @@ const mutation = new GraphQLObjectType({
         return Team.createUser(email, password, name, position, teamID)
       }
     },
+    addExistingUser: {
+      type: UserType,
+      args: {
+        email: {type: GraphQLString},
+        teamID: {type: GraphQLID}
+      },
+      resolve(parentValue, {email, teamID}){
+        return Team.addExistingUser(email, teamID);
+      }
+    },
     createTeam: {
       type: TeamType,
       args: {
@@ -123,13 +133,14 @@ const mutation = new GraphQLObjectType({
           )
       }
     },
-    taskCompleted: {
+    changeTaskStatus: {
       type: TaskType,
       args: {
-        taskID: { type: GraphQLID }
+        taskID: { type: GraphQLID },
+        status: { type: GraphQLString }
       },
-      resolve(parentValue, {taskID}){
-        return Task.taskCompleted(taskID);
+      resolve(parentValue, {taskID, status}){
+        return Task.changeTaskStatus(taskID, status);
       }
     },
     createList: {

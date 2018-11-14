@@ -35,22 +35,17 @@ TeamSchema.statics.createUser = function(email, password, name, position, teamID
   })
 }
 
-// ListSchema.statics.addListItem = function(id, content ){
-//   const ListItem = mongoose.model('listItem');
-
-//     return this.findById(id)
-//       .then(list => {
-//         const listItem = new ListItem({ content, list })
-//         list.items.push(listItem)
-//         return Promise.all([listItem.save(), list.save()])
-//           .then(([listItem, list]) => list);
-//       });
-// }
-
-// ListSchema.statics.findListItems = function(id){
-//   return this.findById(id)
-//     .populate('items')
-//     .then(list => list.items);
-// }
+TeamSchema.statics.addExistingUser = function(email, teamID){
+  const User = mongoose.model('user');
+  return User.findOne({email})
+    .then(user => {
+      return this.findById(teamID)
+      .then(team => {
+        team.members.push(user);
+        return Promise.all([user.save(), team.save()])
+        .then(([user, team]) => user);
+      })
+    })
+}
 
 mongoose.model('team', TeamSchema);

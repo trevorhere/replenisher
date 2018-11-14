@@ -26,10 +26,10 @@ const TaskSchema = new Schema({
 });
 
 
-TaskSchema.statics.taskCompleted = function(taskID){
+TaskSchema.statics.changeTaskStatus = function(taskID, status){
   return this.findById(taskID)
     .then(task => {
-        task.status = "complete";
+        task.status = status;
         return Promise.all(task.save())
         .then(task => task);
       })
