@@ -15,7 +15,7 @@ Assumptions:
   - Priority / Rank
   - -   I limited priority to a scale of 0 - 4, 0 being low and 4 being nuclear. Tasks are then ordered in a list first based on priority and then based on expected duration. i.e Tasks with the highest priority and the shortest expected duration appear first.
 
-  Though rank isn't explicitly stated in the application, this ordering in the list provides an intuitive ranking system for the user to follow.
+  - - Though rank isn't explicitly stated in the application, this ordering in the list provides an intuitive ranking system for the user to follow.
 
 
 
