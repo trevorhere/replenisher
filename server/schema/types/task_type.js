@@ -5,6 +5,7 @@ const { GraphQLObjectType,
   GraphQLID,
   GraphQLList,
   GraphQLInt,
+  GraphQLBoolean
 } = graphql;
 
 const Task = mongoose.model('task');
@@ -25,6 +26,14 @@ const TaskType = new GraphQLObjectType({
     timeDue: {type: GraphQLString},
     started: {type: GraphQLString},
     finished: {type: GraphQLString},
+    recurring: {type: GraphQLBoolean},
+    kill: { type: GraphQLInt },
+    repeat: { type: GraphQLInt },
+    created:{type: GraphQLString},
+    recurringInterval: { type: GraphQLInt },
+    recurringMultiplier:{type: GraphQLString},
+    recurringDeathNumber:{ type: GraphQLInt },
+    recurringDeathMultiplier:{type: GraphQLString},
     creator: {
       type: require('./user_type'),
       resolve(parentValue){

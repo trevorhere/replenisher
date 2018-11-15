@@ -14,7 +14,15 @@ export default gql`
   $finished:String,
   $durationHours:Int,
   $durationMinutes:Int,
-  $notes:String
+  $notes:String,
+  $recurring: Boolean
+  $kill: Int,
+  $repeat: Int,
+  $created: String,
+  $recurringInterval: Int,
+  $recurringDeathMultiplier: String,
+  $recurringDeathNumber: Int,
+  $recurringMultiplier: String
 
 	){
   createTask(
@@ -30,7 +38,15 @@ export default gql`
   	finished:$finished,
   	durationHours:$durationHours,
   	durationMinutes:$durationMinutes,
-  	notes:$notes
+  	notes:$notes,
+    recurring: $recurring
+    kill:$kill,
+    repeat: $repeat,
+    created: $created,
+    recurringInterval: $recurringInterval,
+    recurringDeathMultiplier:$recurringDeathMultiplier,
+    recurringDeathNumber:$recurringDeathNumber,
+    recurringMultiplier: $recurringMultiplier,
   	){
   	id
     name

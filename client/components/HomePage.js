@@ -6,14 +6,14 @@ const componentStyle={
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  textAlign: "center"
-}
-const headerStyle = {
+  textAlign: "center",
 
 }
+const headerStyle = {}
 const titleStyle={}
 const subtitleStyle={
   fontSize: "24px",
+  width: "60vw",
 }
 
 

@@ -16,6 +16,14 @@ query Task($taskID:ID!){
     feedback
     started
     finished
+    kill
+    repeat
+    recurring
+    created
+    recurringInterval
+recurringMultiplier
+recurringDeathNumber
+recurringDeathMultiplier
 
   }
 }

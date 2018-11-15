@@ -5,7 +5,8 @@ const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLID,
-  GraphQLInt
+  GraphQLInt,
+  GraphQLBoolean
 } = graphql;
 
 const UserType = require('./types/user_type');
@@ -118,7 +119,15 @@ const mutation = new GraphQLObjectType({
         finished: {type: GraphQLString},
         durationHours: {type: GraphQLInt},
         durationMinutes: {type: GraphQLInt},
-        notes: { type: GraphQLString}
+        recurring: {type: GraphQLBoolean},
+        kill: {type: GraphQLInt},
+        repeat: {type: GraphQLInt},
+        notes: { type: GraphQLString},
+        created: { type: GraphQLString},
+        recurringInterval: { type: GraphQLInt },
+        recurringMultiplier:{type: GraphQLString},
+        recurringDeathNumber:{ type: GraphQLInt },
+        recurringDeathMultiplier:{type: GraphQLString},
       },
       resolve(parentValue, {
         content,
@@ -133,7 +142,15 @@ const mutation = new GraphQLObjectType({
         finished,
         durationHours,
         durationMinutes,
-        notes
+        notes,
+        recurring,
+        kill,
+        repeat,
+        created,
+        recurringInterval,
+        recurringMultiplier,
+        recurringDeathNumber,
+        recurringDeathMultiplier
 
       }){
         return List.createTask(
@@ -149,10 +166,28 @@ const mutation = new GraphQLObjectType({
           finished,
           durationHours,
           durationMinutes,
-          notes
+          notes,
+          recurring,
+          kill,
+          repeat,
+          created,
+          recurringInterval,
+        recurringMultiplier,
+        recurringDeathNumber,
+        recurringDeathMultiplier
           )
       }
     },
+    setRecurringFalse:{
+      type: TaskType,
+      args: {
+        taskID: {type: GraphQLID}
+      },
+      resolve(parentValue, {taskID}){
+        return Task.setRecurringFalse(taskID);
+      }
+    },
+
     changeTaskStatus: {
       type: TaskType,
       args: {

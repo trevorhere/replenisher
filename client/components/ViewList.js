@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { graphql, Query } from 'react-apollo';
+import { graphql, Query, compose } from 'react-apollo';
 import query from '../gql/queries/fetchList';
-import mutation from '../gql/mutations/ChangeTaskStatus';
+import changeTaskStatus from '../gql/mutations/ChangeTaskStatus';
+import setRecurringFalse from '../gql/mutations/SetRecurringFalse';
 import Loading from './Loading'
 const moment = require('moment');
 
@@ -22,36 +23,38 @@ class ViewList extends Component{
     }
   }
 
+  //change from recurring mutation
 
   changeTaskStatus(taskID, status, started, finished){
 
     if(status == "pending"){
-      this.props.mutate({
+      this.props.ChangeTaskStatus({
         variables: { taskID, status, started, finished }})
       }
       else if(status == "underway")
       {
-        started = moment().format('MMMM Do YYYY, h:mm:ss a');
-        this.props.mutate({
+        started = moment().format('MM/DD/YY, HH:mm');
+        this.props.ChangeTaskStatus({
           variables: { taskID, status, started, finished }})
       }
       else if(status == "complete")
       {
-        finished = moment().format('MMMM Do YYYY, h:mm:ss a');
-        this.props.mutate({
+        finished = moment().format('MM/DD/YY, HH:mm');
+        this.props.ChangeTaskStatus({
           variables: { taskID, status, started, finished }})
       }
   }
 
   renderTasks(tasks, refetch){
     return ( tasks ?
-      tasks.map(({id, content, status, started, finished, priority, durationHours, durationMinutes }) => {
+      tasks.map(({id, content, status, started, finished, priority, durationHours, durationMinutes, created }) => {
       return (
       <li key={id} className="collection-item ">
         <Link to={`/dashboard/list/${this.props.match.params.listID}/task/${id}`} >{content}</Link>
         <div style={style} className="right">
             <span style={{paddingRight: "10px"}}>priority: {priority} | </span>
             <span style={{paddingRight: "10px"}}>{durationHours}Hr {durationMinutes}Min | </span>
+
             status: {status}
             { status == "complete" ? <div></div> :
             <div>
@@ -110,6 +113,47 @@ class ViewList extends Component{
         }
       })
     }
+      // if recurring && complete
+        // if repeat > now - finished || now - created
+        // and kill < && now - created
+        // status = pending
+
+
+
+    minutesSince(date){
+      let now = moment().format('MM/DD/YY, HH:mm');
+      let diff = Math.abs(new Date(now) - new Date(date));
+      let minutes = Math.floor((diff/1000)/60);
+      return minutes
+    }
+
+    recurringFalse(taskID){
+
+        this.props.SetRecurringFalse({
+          variables: { taskID }
+        })
+    }
+
+    resetRecurringTasks(list){
+      if(list.tasks){
+        list.tasks.map(task => {
+
+
+         if(task.kill <= this.minutesSince(task.created)){
+           this.recurringFalse(task.id);
+         } else {
+          if(task.recurring && task.status == "complete"){
+            if(task.repeat < this.minutesSince(task.finished) || task.repeat < this.minutesSince(task.created)){
+              task.status = "pending";
+              task.finished = "N/A";
+              task.started = "N/A";
+            }
+          }
+        }
+      })
+    }
+  }
+
 
 
   render(){
@@ -134,6 +178,7 @@ class ViewList extends Component{
             return <div>Error: {error.message}</div>;
           }
 
+         this.resetRecurringTasks(list)
          const pendingTasks  =  this.filteredTasks(list, "pending");
          const underwayTasks =  this.filteredTasks(list, "underway");
          const completeTasks =  this.filteredTasks(list, "complete");
@@ -213,4 +258,7 @@ class ViewList extends Component{
 
 // })(ViewList);
 
-export default graphql(mutation)(ViewList);
+export default compose(
+  graphql(changeTaskStatus, {name: "ChangeTaskStatus"}),
+  graphql(setRecurringFalse, {name: "SetRecurringFalse"}),
+  )(ViewList)

@@ -29,6 +29,10 @@ query List($listID:ID!){
         feedback
         started
         finished
+        recurring
+        repeat
+        kill
+        created
         creator{
           id
           email

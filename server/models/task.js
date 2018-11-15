@@ -9,6 +9,7 @@ const TaskSchema = new Schema({
   },
   status: { type: String },
   rank: { type: String },
+  created: { type: String },
   notes: { type: String },
   feedback: { type: String },
   priority: {type: Number},
@@ -20,16 +21,32 @@ const TaskSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'user'
   },
+  recurring: {type: Boolean},
+  kill: {type: Number},
+  repeat: {type: Number},
   dueDate: {type:String},
   timeDue: {type:String},
   started: {type: String},
   finished: {type: String},
   durationHours: { type: Number },
-  durationMinutes: { type: Number }
+  durationMinutes: { type: Number },
+  recurringInterval: { type: Number },
+  recurringDeathMultiplier:{type: String},
+  recurringDeathNumber:{ type: Number },
+  recurringMultiplier: {type: String},
 });
 
+TaskSchema.statics.setRecurringFalse = function(taskID){
+  return this.findById(taskID)
+  .then(task => {
+    task.recurring = false;
+    return Promise.all(task.save())
+    .then(task => task);
+  })
+}
 
 TaskSchema.statics.changeTaskStatus = function(taskID, status, started, finished){
+  console.log('task status func hit');
   return this.findById(taskID)
     .then(task => {
         task.status = status;

@@ -14,9 +14,14 @@ const style = {
 
 
 class ViewTask extends Component{
+constructor(props){
+  super(props)
 
+  this.state = {
+
+  }
+}
   render(){
-    console.log('props', this.props);
     if(this.props.data.loading){
       return (<Loading loading={this.props.data.loading}/>);
     }
@@ -29,14 +34,14 @@ class ViewTask extends Component{
       >
         {({loading, error, data }) => {
           const { task } = data;
-          // console.log('task',task)
+
 
           if (loading) {
             return (<Loading loading={loading}/>);
           } else if (error) {
             return <div>Error: {error.message}</div>;
           }
-
+          console.log('recurring',task.recurring)
           return (
             <div>
             <div style={style} className="">
@@ -47,20 +52,21 @@ class ViewTask extends Component{
             <br/>
             Estimated Duration:  {task.durationHours}Hr {task.durationMinutes}Min
             <br/>
-            Notes: {task.notes}
-            <br/>
-            Feedback: {task.feedback}
-            <br/>
-            Due Date: {task.dueDate}
-            <br/>
-            Time Date: {task.timeDue}
+            Created: {task.created}
             <br/>
             Started: {task.started}
             <br/>
             Finished: {task.finished}
             <br/>
+            {task.recurring ? <div>
+              Recurs every {task.recurringInterval} {task.recurringMultiplier}
+              <br/>
+              for {task.recurringDeathNumber} {task.recurringDeathMultiplier}
+            </div> : <span></span>}
             <br/>
+            Notes: {task.notes}
             <br/>
+            Feedback: {task.feedback}
             <br/>
             </div>
             <div style={{marginTop: "10px"}}>
@@ -70,6 +76,8 @@ class ViewTask extends Component{
                 style={{margin: "10px"}}
                 className=" btn-large red right">Back</Link>
                 </div>
+
+
           </div>
           );
         }}

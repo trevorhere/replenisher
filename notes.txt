@@ -34,3 +34,41 @@ assumptions:
   {
   "teamID": "5beb6b974ab1076f37784a30"
 }
+
+
+//
+
+
+  changeTaskStatus( taskID, status){
+
+    //status == underway
+    // staus == pending
+    //status == complete
+
+    let started = null;
+    let finished =null ;
+
+    if(status == "pending"){
+
+      started = "N/A";
+      finished = "N/A"
+
+      this.props.mutate({
+        variables: { taskID, status, started, finished }})
+      }
+      else if(status == "underway")
+      {
+        started = moment().format('MMMM Do YYYY, h:mm:ss a');
+        finished = "N/A"
+
+        this.props.mutate({
+          variables: { taskID, status, started, finished }})
+      }
+      else if(status == "completed")
+      {
+        started = task.started;
+        finished = moment().format('MMMM Do YYYY, h:mm:ss a');
+        this.props.mutate({
+          variables: { taskID, status, started, finished }})
+      }
+  }
