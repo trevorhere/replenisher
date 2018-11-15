@@ -18,6 +18,6 @@ Assumptions:
   - - Though rank isn't explicitly stated in the application, this ordering in the list provides an intuitive ranking system for the user to follow.
 
 
-
 Things I Didn't Complete
-  -
+  - Testing
+  -  - Though testing is incredibly important in the development process, I was unfortunately unable to tests for this application. But, If I could have, I would have writen unit test for most of the major components along with some tests that would essentialy be API calls to my graphql layer to seed data along with API calls to graphql to assert correct data placement.
