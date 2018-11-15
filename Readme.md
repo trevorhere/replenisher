@@ -20,4 +20,4 @@ Assumptions:
 
 Things I Didn't Complete
   - Testing
-  -  - Though testing is incredibly important in the development process, I was unfortunately unable to tests for this application. But, If I could have, I would have writen unit test for most of the major components along with some tests that would essentialy be API calls to my graphql layer to seed data along with API calls to graphql to assert correct data placement.
+  -  - Though testing is incredibly important in the development process, I was unfortunately unable to write tests for this application. But, If I could have, I would have writen unit test for most of the major components along with some tests that would essentialy be API calls to my graphql layer to seed data along with API calls to graphql to assert correct data placement.
