@@ -21,3 +21,7 @@ Assumptions:
 Things I Didn't Complete
   * Testing
     * Though testing is incredibly important in the development process, I was unfortunately unable to write tests for this application. But, If I could have, I would have writen unit test for most of the major components along with some tests that would essentialy be API calls to my graphql layer to seed data along with API calls to graphql to assert correct data placement.
+  * Notes
+    * Although you are able to enter notes when you create a task, I didn't include the capability to update these notes.
+  * Feedback
+    * Feedback exists on the task data type but didn't include editing capability for this feature either.
