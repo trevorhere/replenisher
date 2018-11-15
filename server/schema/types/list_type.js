@@ -44,15 +44,6 @@ const ListType = new GraphQLObjectType({
       resolve(parentValue) {
         return List.findTasks(parentValue.id);
       }
-    },
-    recurringTasks: {
-      type: GraphQLList( require('./recurring_task_type')),
-      resolve(parentValue) {
-        return List.findById(parentValue).populate('recurringTasks')
-          .then( list => {
-            return list.recurringTasks;
-          });
-      }
     }
   })
 });

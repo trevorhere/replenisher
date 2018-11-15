@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import query from '../gql/queries/fetchLists';
-import { css } from 'react-emotion';
 import Loading from './Loading';
 
 class Dashboard extends Component {
@@ -29,7 +28,6 @@ class Dashboard extends Component {
    )}
 
   render(){
-    console.log(this.props);
     if(this.props.data.loading){
       return ( <Loading loading={this.props.data.loading} /> )
     }
@@ -45,7 +43,6 @@ class Dashboard extends Component {
             className="btn-large red right"
           >
             Create List
-            {/* <i className="material-icons" >add</i> */}
           </Link>
           <br/>
           <br/>
@@ -62,7 +59,6 @@ class Dashboard extends Component {
             className="btn-flyou are logged inating btn-large red right"
           >
             Create Team
-            {/* <i className="material-icons" >add</i> */}
           </Link>
       </div>
     )

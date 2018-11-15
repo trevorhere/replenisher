@@ -18,7 +18,6 @@ class SignupForm extends Component {
   onSubmit(event){
     event.preventDefault();
     const {email, password, name, position} = this.state;
-    console.log('state', this.state);
     this.props.mutate({
       variables: {email, password, name, position},
       refetchQueries: [{ query }]
@@ -58,6 +57,7 @@ class SignupForm extends Component {
         </div>
         <div className="input-field">
         <input
+        type="password"
           placeholder="password"
           value={this.state.password}
           onChange={e => this.setState({

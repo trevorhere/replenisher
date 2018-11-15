@@ -22,18 +22,17 @@ constructor(props){
 
   }
 }
+      removeTask(){
+        this.props.mutate({
+          variables: {taskID: this.props.match.params.taskID}
+        });
 
-removeTask(taskID){
-  this.props.mutate({
-    variables: {taskID: taskID}
-  });
-}
+        this.props.history.push(`/dashboard/list/${this.props.match.params.listID}`)
+
+      }
 
 
   render(){
-
-
-
     if(this.props.data.loading){
       return (<Loading loading={this.props.data.loading}/>);
     }
@@ -53,7 +52,6 @@ removeTask(taskID){
           } else if (error) {
             return <div>Error: {error.message}</div>;
           }
-          console.log('recurring',task.recurring)
           return (
             <div>
             <div style={style} className="">
@@ -83,16 +81,14 @@ removeTask(taskID){
             </div>
             <div style={{marginTop: "10px"}}>
 
-              <Link
+              <a
                 to={`/dashboard/list/${this.props.match.params.listID}`}
                 style={{margin: "10px"}}
                 className=" btn-large red right"
-                onClick={this.removeTask(this.props.match.params.taskID)}
-
+                 onClick={() => this.removeTask()}
                 >
                 Remove Task
-                {/* <i className="material-icons" >add</i> */}
-                </Link>
+                </a>
                 <Link
                 to={`/dashboard/list/${this.props.match.params.listID}`}
                 style={{margin: "10px"}}
@@ -108,22 +104,6 @@ removeTask(taskID){
     )
   }
 }
-
-
-// <Link
-// to={`${this.props.match.url}/createtask`}
-// style={{margin: "10px"}}
-// className=" btn-large red right"
-// >
-// Edit Task
-// {/* <i className="material-icons" >add</i> */}
-// </Link>
-
-// export default graphql(query, {
-//   options:
-//    (props) => { return { variables: {id: props.match.params.listID}}},
-
-// })(ViewList);
 
 
 export default graphql(mutation)(ViewTask);

@@ -57,7 +57,6 @@ const TaskType = new GraphQLObjectType({
       resolve(parentValue) {
         return Task.findById(parentValue).populate('list')
           .then(task => {
-            console.log(task);
             return task.list
         })
       }

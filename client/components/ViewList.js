@@ -8,9 +8,8 @@ import Loading from './Loading'
 const moment = require('moment');
 
 const style = {
-//  right: '0'
   display: 'flex',
- alignItems: 'center'
+  alignItems: 'center'
 }
 
 
@@ -23,25 +22,21 @@ class ViewList extends Component{
     }
   }
 
-  //change from recurring mutation
-
   changeTaskStatus(taskID, status, started, finished){
 
     if(status == "pending"){
       this.props.ChangeTaskStatus({
-        variables: { taskID, status, started, finished }})
+        variables: { taskID, status, started: "N/A" , finished: "N/A"}})
       }
       else if(status == "underway")
       {
-        started = moment().format('MM/DD/YY, HH:mm');
         this.props.ChangeTaskStatus({
-          variables: { taskID, status, started, finished }})
+          variables: { taskID, status, started:moment().format('MM/DD/YY, HH:mm'), finished }})
       }
       else if(status == "complete")
       {
-        finished = moment().format('MM/DD/YY, HH:mm');
         this.props.ChangeTaskStatus({
-          variables: { taskID, status, started, finished }})
+          variables: { taskID, status, started, finished:moment().format('MM/DD/YY, HH:mm') }})
       }
   }
 
@@ -113,22 +108,18 @@ class ViewList extends Component{
         }
       })
     }
-      // if recurring && complete
-        // if repeat > now - finished || now - created
-        // and kill < && now - created
-        // status = pending
-
-
 
     minutesSince(date){
+      if(date == "N/A"){
+        return 9999999;
+      }
       let now = moment().format('MM/DD/YY, HH:mm');
       let diff = Math.abs(new Date(now) - new Date(date));
       let minutes = Math.floor((diff/1000)/60);
       return minutes
     }
 
-    recurringFalse(taskID){
-
+    setRecurringFalse(taskID){
         this.props.SetRecurringFalse({
           variables: { taskID }
         })
@@ -137,24 +128,19 @@ class ViewList extends Component{
     resetRecurringTasks(list){
       if(list.tasks){
         list.tasks.map(task => {
+          if(task.recurring ){
 
-
-         if(task.kill <= this.minutesSince(task.created)){
-           this.recurringFalse(task.id);
-         } else {
-          if(task.recurring && task.status == "complete"){
-            if(task.repeat < this.minutesSince(task.finished) || task.repeat < this.minutesSince(task.created)){
-              task.status = "pending";
-              task.finished = "N/A";
-              task.started = "N/A";
+            if(task.kill < this.minutesSince(task.created)){
+                this.setRecurringFalse(task.id);
+            } else if(
+                task.repeat < this.minutesSince(task.finished) &&
+                task.status == "complete" ){
+             this.changeTaskStatus(task.id, "pending", "N/A","N/A")
             }
           }
-        }
-      })
+         })
+      }
     }
-  }
-
-
 
   render(){
     if(this.props.data.loading){
@@ -185,7 +171,7 @@ class ViewList extends Component{
 
          const renderPending = pendingTasks.length ? (
           <div>
-            { console.log(this.sortDuration(pendingTasks))}
+            {console.log(this.sortDuration(pendingTasks))}
             {console.log(this.sortPriority(pendingTasks))}
              <h4>Pending:</h4>
              <ul className="collection">
@@ -229,7 +215,6 @@ class ViewList extends Component{
 
               >
                 Create Task
-                {/* <i className="material-icons" >add</i> */}
               </Link>
                 <Link
                 to={`${this.props.match.url}/assignlist`}
@@ -251,12 +236,6 @@ class ViewList extends Component{
     )
   }
 }
-
-// export default graphql(query, {
-//   options:
-//    (props) => { return { variables: {id: props.match.params.listID}}},
-
-// })(ViewList);
 
 export default compose(
   graphql(changeTaskStatus, {name: "ChangeTaskStatus"}),

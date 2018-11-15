@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { graphql, Query } from 'react-apollo';
+import {  Query } from 'react-apollo';
 import query from '../gql/queries/fetchTeam';
 import Loading from './Loading';
-
-const style = {
-//  right: '0'
-  //display: 'flex',
- // alignItems: 'center'
-}
 
 
 class ViewTeam extends Component{
@@ -31,16 +25,9 @@ class ViewTeam extends Component{
 
 
   render(){
-     //  console.log('props', this.props);
-    // if(this.props.data.loading){
-    //   return (
-    //     <div>
-    //       Loading...
-    //     </div>
-    //   )
-    // }
-
-
+    if(this.props.data.loading){
+      return (<Loading loading={this.props.data.loading}/>);
+    }
     return (
       <Query
         query={query}
@@ -48,8 +35,6 @@ class ViewTeam extends Component{
         fetchPolicy="cache-and-network"
       >
         {({loading, error, data }) => {
-          console.log('props',this.props)
-
 
           if (loading) {
             return (<Loading loading={loading}/>);
@@ -58,8 +43,6 @@ class ViewTeam extends Component{
           }
 
           const { team } = data;
-
-
           return (
             <div>
             <h3>Team: {team.name}</h3>
@@ -71,10 +54,8 @@ class ViewTeam extends Component{
                 to={`${this.props.match.url}/createuser`}
                 className="btn-large red right"
                 style={{margin: "10px"}}
-
               >
                 Add Member To Team
-                {/* <i className="material-icons" >add</i> */}
               </Link>
               <Link
                 to={`/dashboard`}
@@ -88,11 +69,5 @@ class ViewTeam extends Component{
     )
   }
 }
-
-// export default graphql(query, {
-//   options:
-//    (props) => { return { variables: {id: props.match.params.listID}}},
-
-// })(ViewList);
 
 export default ViewTeam;

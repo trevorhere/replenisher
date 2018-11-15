@@ -1,16 +1,10 @@
 import React, {Component} from 'react';
-import ReactDom from 'react-dom';
 import {graphql} from 'react-apollo';
 import { Link } from 'react-router-dom';
 import createTask from '../gql/mutations/CreateTask';
-import createRecuringTask from '../gql/mutations/CreateTask';
-import query from '../gql/queries/fetchList';
 const moment = require('moment');
 let mutation = createTask;
 import ReactRadioButtonGroup from 'react-radio-button-group';
-
-// if recurring check
-
 
 class CreateTask extends Component {
   constructor(props){
@@ -47,15 +41,6 @@ class CreateTask extends Component {
   onSubmit(event){
     event.preventDefault();
 
-     if(this.state.recurringText == "Yes"){
-       this.setState({
-         recurring: true
-       });
-
-     }
-     console.log('check',this.state.recurring);
-
-
     this.props.mutate({
       variables: {
         content: this.state.content,
@@ -78,9 +63,7 @@ class CreateTask extends Component {
         recurringDeathMultiplier: this.state.recurringMultiplier,
         recurringDeathNumber: this.state.recurringDeathNumber,
         recurringMultiplier: this.state.recurringMultiplier
-
       },
-      refetchQueries: [{ query }]
     }).then(() => this.props.history.push(`/dashboard/list/${this.props.match.params.listID}`))
   }
 
@@ -219,22 +202,6 @@ render(){
           }}
       />
       <br/>
-      {/* <label>Expected Due Date:</label>
-       <label>  MM DD YYYY</label>
-      <input
-        onChange={event => this.setState({
-          dueDate: event.target.value
-        })}
-        value={this.state.dueDate}
-      />
-      <label>Expected Time Due:</label>
-       <label>  HH MM SS</label>
-      <input
-        onChange={event => this.setState({
-          timeDue: event.target.value
-        })}
-        value={this.state.timeDue}
-      /> */}
       <label>Duration - Hours:</label>
       <input
         type="Number"
@@ -327,7 +294,6 @@ render(){
           value={this.state.recurringDoubleCheck}
 
           onChange={checkedValue => {
-            console.log('running check');
             this.handleRecurringBirth();
             this.handleRecurringDeath();
             if(this.state.recurringText == "Yes" && checkedValue == "Yes"){
@@ -347,53 +313,7 @@ render(){
           }}
       />
       </div>
-
-
-
-{/* <div>
-
-
-            <ReactRadioButtonGroup
-          name="test"
-          options={["handleRecurringBirth Func"]}
-          value={"test"}
-          onChange={checkedValue => {
-            this.handleRecurringBirth();
-          }}
-      />
-            <ReactRadioButtonGroup
-          name="test"
-          options={["log repeat"]}
-          value={"test"}
-          onChange={checkedValue => {
-            console.log('repeat2: ',this.state.repeat)
-          }}
-      />
       <hr/>
-
-
-      <ReactRadioButtonGroup
-          name="test"
-          options={["handleRecurringDeath Func"]}
-          value={"test"}
-          onChange={checkedValue => {
-            this.handleRecurringDeath();
-          }}
-      />
-            <ReactRadioButtonGroup
-          name="test"
-          options={["log kill"]}
-          value={"test"}
-          onChange={checkedValue => {
-            console.log('kill2: ',this.state.kill)
-          }}
-      />
-
-</div> */}
-
-      <hr/>
-
-
       <label>Notes:</label>
       <input
         onChange={event => this.setState({
@@ -407,10 +327,6 @@ render(){
     </div>
   )
 }
-
-
 }
-
-
 
 export default graphql(mutation)(CreateTask);

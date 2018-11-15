@@ -17,10 +17,6 @@ const ListSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'task'
   }],
-  recurringTasks: [{
-    type: Schema.Types.ObjectId,
-    ref: 'recurringTasks'
-  }]
 }, {usePushEach: true});
 
 ListSchema.statics.createTask = function(

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { graphql, Query } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import query from '../gql/queries/fetchUser';
 import Loading from './Loading';
 
@@ -9,7 +9,6 @@ const style = {
      padding: '10px',
      marginTop: '20px'
 }
-
 
 class ViewUser extends Component{
 
@@ -20,7 +19,6 @@ class ViewUser extends Component{
       )
     })
   }
-
 
   render(){
     console.log(this.props);

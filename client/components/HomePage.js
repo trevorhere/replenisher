@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 const componentStyle={
   height: "80vh",
   display: "flex",

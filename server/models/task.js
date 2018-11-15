@@ -40,28 +40,27 @@ TaskSchema.statics.setRecurringFalse = function(taskID){
   return this.findById(taskID)
   .then(task => {
     task.recurring = false;
-    return Promise.all(task.save())
-    .then(task => task);
+    return Promise.all([task.save()])
+    .then(([task]) => task);
   })
 }
 
 TaskSchema.statics.changeTaskStatus = function(taskID, status, started, finished){
-  console.log('task status func hit');
   return this.findById(taskID)
     .then(task => {
         task.status = status;
         task.started = started;
         task.finished = finished;
-        return Promise.all(task.save())
-        .then(task => task);
+        return Promise.all([task.save()])
+        .then(([task]) => task);
       })
 }
 
 TaskSchema.statics.removeTask = function(taskID){
   return this.findByIdAndRemove(taskID)
   .then(task => {
-    return Promise.all(task.save())
-    .then(task => task);
+    return Promise.all([task.save()])
+    .then(([task]) => task);
   })
 
 

@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import query from '../gql/queries/CurrentUser';
 import mutation from '../gql/mutations/Logout';
 
-
 class Header extends Component {
-
   onLogoutClick() {
     this.props.mutate({
       refetchQueries: [{ query }]
@@ -34,7 +32,6 @@ class Header extends Component {
         </div>
       )
     }
-
     return (
       <div>
         <li>
@@ -44,11 +41,8 @@ class Header extends Component {
           <Link to="/login">Login</Link>
         </li>
       </div>
-
     )
-
   }
-
   render(){
     return (
       <nav>

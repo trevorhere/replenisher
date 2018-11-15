@@ -24,7 +24,6 @@ class CreateUser extends Component {
     mutation = createUser;
     const {email, password, name, position} = this.state;
     const teamID = this.props.match.params.teamID;
-    console.log('state', this.state);
 
     this.props.mutate({
       variables: {email, password, name, position,teamID },
@@ -40,7 +39,6 @@ class CreateUser extends Component {
     event.preventDefault();
     const {email} = this.state;
     const teamID = this.props.match.params.teamID;
-    console.log('state', this.state);
     this.props.mutate({
       variables: {email,teamID },
       refetchQueries: [{ query }]

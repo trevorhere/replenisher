@@ -5,8 +5,8 @@ import SignupForm from './SignupForm';
 import requireAuth from './requireAuth';
 import Dashboard from './Dashboard';
 
-import { Route, IndexRoute } from 'react-router';
-import {  HashRouter, Switch, Link } from 'react-router-dom';
+import { Route } from 'react-router';
+import { Switch } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import query from '../gql/queries/CurrentUser';
 
@@ -23,10 +23,6 @@ import ViewUser from './ViewUser';
 
 import HomePage from './HomePage';
 import AssignList from './AssignList';
-
-
-
-
 
 
 const App = (props) => {

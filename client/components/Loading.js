@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { css } from 'react-emotion';
 import { PacmanLoader } from 'react-spinners';
 
-// this component should show a list of the users lists
 
 const override = css`
     display: block;
