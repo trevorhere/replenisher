@@ -43,8 +43,6 @@ render(){
     </div>
   )
 }
-
-
 }
 
 export default graphql(mutation)(CreateTeam);

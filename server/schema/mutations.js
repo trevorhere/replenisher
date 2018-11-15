@@ -74,14 +74,14 @@ const mutation = new GraphQLObjectType({
         return Team.createUser(email, password, name, position, teamID)
       }
     },
-    addExistingUser: {
+    existingUserToTeam: {
       type: UserType,
       args: {
         email: {type: GraphQLString},
         teamID: {type: GraphQLID}
       },
       resolve(parentValue, {email, teamID}){
-        return Team.addExistingUser(email, teamID);
+        return Team.existingUserToTeam(email, teamID);
       }
     },
     assignListToUser: {

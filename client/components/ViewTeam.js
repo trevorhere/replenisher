@@ -12,7 +12,7 @@ class ViewTeam extends Component{
       return (
       <li key={id} className="collection-item ">
         <Link to={`/dashboard/team/${team.id}/user/${id}`} >{name}</Link>
-        <div style={style} className="right">
+        <div className="right">
         position: {position}
         </div>
       </li>
@@ -34,7 +34,7 @@ class ViewTeam extends Component{
         variables={{ teamID: this.props.match.params.teamID}}
         fetchPolicy="cache-and-network"
       >
-        {({loading, error, data }) => {
+        {({loading, error, data, refetch }) => {
 
           if (loading) {
             return (<Loading loading={loading}/>);

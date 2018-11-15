@@ -1,65 +1,52 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
-import query from '../gql/queries/fetchLists';
+import query from '../gql/queries/Dashboard';
 import Loading from './Loading';
 
 class Dashboard extends Component {
 
-  renderLists(){
-    return this.props.data.user.lists.map(({id, name}) => {
+  renderList(items, link){
+    return items.map(({id, name}) => {
       return (
       <li key={id} className="collection-item">
-        <Link to={`/dashboard/list/${id}`}>{name}</Link>
+        <Link to={`/dashboard/${link}}/${id}`}>{name}</Link>
       </li>
       );
     });
   }
-
-  renderTeams(teams){
-    console.log('teams', teams)
-       return ( teams ? teams.map(({id, name}) => {
-         return (
-        <li key={id} className="collection-item">
-          <Link to={`/dashboard/team/${id}`}>{name}</Link>
-        </li>
-         )}) :
-    <li  className="collection-item">You don't have any teams</li>
-   )}
-
   render(){
     if(this.props.data.loading){
       return ( <Loading loading={this.props.data.loading} /> )
     }
-    const { teams } = this.props.data.user;
+    const { teams, lists } = this.props.data.user;
     return (
-      <div>
-        <h3>Your Lists: </h3>
-        <ul className="collection">
-        {this.renderLists()}
-        </ul>
-        <Link
+      <div className="container">
+        <div >
+          <h3>Your Lists: </h3>
+          <ul className="collection">
+            {this.renderList(lists, "list")}
+          </ul>
+          <Link
             to="/dashboard/createlist"
-            className="btn-large red right"
-          >
+            className="btn-large red right">
             Create List
           </Link>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
+        </div>
+        <div style={{height: "100px"}}/>
+        <div >
           <h3>Your Teams: </h3>
           <ul className="collection">
-           {this.renderTeams(teams)}
+            {this.renderList(teams, "team")}
           </ul>
           <br/>
           <br/>
           <Link
             to="/dashboard/createteam"
-            className="btn-flyou are logged inating btn-large red right"
-          >
-            Create Team
+            className="btn-flyou are logged inating btn-large red right">
+             Create Team
           </Link>
+        </div>
       </div>
     )
   }

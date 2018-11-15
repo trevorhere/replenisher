@@ -26,7 +26,6 @@ import AssignList from './AssignList';
 
 
 const App = (props) => {
-  console.log(props);
   return (
     <div>
       <Header />

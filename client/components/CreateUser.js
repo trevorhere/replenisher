@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import {graphql} from 'react-apollo';
+import {graphql, compose } from 'react-apollo';
 import createUser from '../gql/mutations/CreateUser';
-import addExistingUser from '../gql/mutations/AddExistingUser';
+import existingUserToTeam from '../gql/mutations/ExistingUserToTeam';
 import query from '../gql/queries/fetchTeam';
 import { Link } from 'react-router-dom';
-let mutation = createUser;
 
 
 class CreateUser extends Component {
@@ -21,12 +20,9 @@ class CreateUser extends Component {
 
   onSubmit(event){
     event.preventDefault();
-    mutation = createUser;
     const {email, password, name, position} = this.state;
-    const teamID = this.props.match.params.teamID;
-
-    this.props.mutate({
-      variables: {email, password, name, position,teamID },
+    this.props.CreateUser({
+      variables: {email, password, name, position, teamID:this.props.match.params.teamID },
       refetchQueries: [{ query }]
     })
 
@@ -35,12 +31,9 @@ class CreateUser extends Component {
   }
 
   findExistingUser(event){
-    mutation = addExistingUser;
     event.preventDefault();
-    const {email} = this.state;
-    const teamID = this.props.match.params.teamID;
-    this.props.mutate({
-      variables: {email,teamID },
+    this.props.ExistingUserToTeam({
+      variables: {email: this.state.email ,teamID: this.props.match.params.teamID},
       refetchQueries: [{ query }]
     })
 
@@ -79,6 +72,7 @@ class CreateUser extends Component {
         </div>
         <div className="input-field">
         <input
+          type="password"
           placeholder="password"
           value={this.state.password}
           onChange={e => this.setState({
@@ -119,4 +113,8 @@ class CreateUser extends Component {
   }
 }
 
-export default graphql(mutation)(CreateUser);
+
+export default compose(
+  graphql(existingUserToTeam, {name: "ExistingUserToTeam"}),
+  graphql(createUser, {name: "CreateUser"}),
+  )(CreateUser)

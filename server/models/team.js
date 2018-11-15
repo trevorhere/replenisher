@@ -35,7 +35,7 @@ TeamSchema.statics.createUser = function(email, password, name, position, teamID
   })
 }
 
-TeamSchema.statics.addExistingUser = function(email, teamID){
+TeamSchema.statics.existingUserToTeam = function(email, teamID){
   const User = mongoose.model('user');
   return User.findOne({email})
     .then(user => {
