@@ -24,4 +24,4 @@ Things I Didn't Complete
   * Notes
     * Although you are able to enter notes when you create a task, I didn't include the capability to update these notes.
   * Feedback
-    * Feedback exists on the task data type but didn't include editing capability for this feature either.
+    * Feedback exists on the task data type but I didn't include editing capability for this feature either.
