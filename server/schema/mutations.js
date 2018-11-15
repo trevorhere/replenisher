@@ -178,6 +178,15 @@ const mutation = new GraphQLObjectType({
           )
       }
     },
+    removeTask : {
+      type: TaskType,
+      args: {
+        taskID: {type: GraphQLID}
+      },
+      resolve(parentValue, {taskID}){
+        return Task.removeTask(taskID);
+      }
+    },
     setRecurringFalse:{
       type: TaskType,
       args: {

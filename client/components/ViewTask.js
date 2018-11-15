@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { graphql, Query } from 'react-apollo';
 import query from '../gql/queries/fetchTask';
+import mutation from '../gql/mutations/RemoveTask';
 import Loading from './Loading';
 
 const style = {
@@ -21,7 +22,18 @@ constructor(props){
 
   }
 }
+
+removeTask(taskID){
+  this.props.mutate({
+    variables: {taskID: taskID}
+  });
+}
+
+
   render(){
+
+
+
     if(this.props.data.loading){
       return (<Loading loading={this.props.data.loading}/>);
     }
@@ -74,7 +86,18 @@ constructor(props){
               <Link
                 to={`/dashboard/list/${this.props.match.params.listID}`}
                 style={{margin: "10px"}}
-                className=" btn-large red right">Back</Link>
+                className=" btn-large red right"
+                onClick={this.removeTask(this.props.match.params.taskID)}
+
+                >
+                Remove Task
+                {/* <i className="material-icons" >add</i> */}
+                </Link>
+                <Link
+                to={`/dashboard/list/${this.props.match.params.listID}`}
+                style={{margin: "10px"}}
+                className=" btn-large red right"
+                >Back</Link>
                 </div>
 
 
@@ -103,4 +126,4 @@ constructor(props){
 // })(ViewList);
 
 
-export default ViewTask;
+export default graphql(mutation)(ViewTask);

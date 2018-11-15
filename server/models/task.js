@@ -57,4 +57,14 @@ TaskSchema.statics.changeTaskStatus = function(taskID, status, started, finished
       })
 }
 
+TaskSchema.statics.removeTask = function(taskID){
+  return this.findByIdAndRemove(taskID)
+  .then(task => {
+    return Promise.all(task.save())
+    .then(task => task);
+  })
+
+
+}
+
 mongoose.model('task', TaskSchema);
