@@ -9,7 +9,9 @@
     "client": "cd client && yarn start",
     "server": "nodemon server.js",
     "dev:server": "cd client && yarn build && cd .. && yarn start",
-    "start": "node index.js"
+    "start": "node index.js",
+    "prod": "node index.js --ignore client",
+    "webpack": "webpack"
   },
   "repository": {
     "type": "git",
@@ -48,6 +50,7 @@
     "nodemon": "^1.18.6",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "path": "^0.12.7",
     "react": "^16.6.1",
     "react-apollo": "^2.2.4",
     "react-dom": "^16.6.1",
@@ -59,5 +62,10 @@
     "react-spinners": "^0.4.7",
     "webpack": "^2.2.0",
     "webpack-dev-middleware": "^1.9.0"
+  },
+  "devDependencies": {
+    "file-loader": "^2.0.0",
+    "image-webpack-loader": "^4.5.0",
+    "url-loader": "^1.1.2"
   }
 }

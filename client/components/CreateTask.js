@@ -159,7 +159,7 @@ class CreateTask extends Component {
 
 render(){
   return(
-    <div>
+    <div className="container">
       <h3>Create New Task</h3>
       <form onSubmit={this.onSubmit.bind(this)}>
       <label>Task Name:</label>

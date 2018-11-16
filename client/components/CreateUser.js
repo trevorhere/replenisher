@@ -43,7 +43,7 @@ class CreateUser extends Component {
 
   render(){
     return (
-      <div>
+      <div className="container">
       <div>
       <h3>Create User</h3>
       <form onSubmit={this.onSubmit.bind(this)} className="col s6">

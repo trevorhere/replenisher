@@ -26,7 +26,7 @@ class CreateTeam extends Component {
 
 render(){
   return(
-    <div>
+    <div className="container">
       <h3>Create New Team</h3>
       <form onSubmit={this.onSubmit.bind(this)}>
       <label>Team Name:</label>

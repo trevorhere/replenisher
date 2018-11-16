@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom';
 import query from '../gql/queries/CurrentUser';
 import mutation from '../gql/mutations/Logout';
 
+const titleStyle={
+  fontWeight: "100",
+  paddingLeft:"20px"
+}
+
 class Header extends Component {
   onLogoutClick() {
     this.props.mutate({
@@ -47,7 +52,7 @@ class Header extends Component {
     return (
       <nav>
         <div className="nav-wrapper">
-          <Link to="/" style={{paddingLeft:"10px"}} className="brand-logo left">   Replenisher</Link>
+          <Link to="/" style={titleStyle} className="brand-logo left">T A S K Y V</Link>
           <ul className="right">
             {this.renderButtons()}
           </ul>

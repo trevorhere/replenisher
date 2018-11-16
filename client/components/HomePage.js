@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import {css} from 'react-emotion';
+import background from "../assets/city.jpeg";
 
 const componentStyle={
-  height: "80vh",
+  background: "url("+ background +") no-repeat center center fixed",
+  height: "93vh",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -9,8 +12,14 @@ const componentStyle={
 
 }
 const headerStyle = {}
-const titleStyle={}
+const titleStyle={
+  color:"#ED6E72",
+  fontSize: "64px",
+  fontWeight: "100"
+
+}
 const subtitleStyle={
+  color:"#ED6E72",
   fontSize: "24px",
   width: "60vw",
 }
@@ -22,8 +31,7 @@ class HomePage extends Component {
     return (
       <div style={componentStyle}>
         <div style={headerStyle}>
-            <h3 style={titleStyle} >Welcome to Replenisher</h3>
-            <h4 style={subtitleStyle}>Click on Login, Signup, or Dashboard in the navigation bar to get started!</h4>
+            <h3 style={titleStyle} >W E L C O M E</h3>
         </div>
       </div>
       );

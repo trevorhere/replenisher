@@ -28,7 +28,7 @@ class AssignList extends Component {
     console.log('props', this.props);
     if (this.props.data.loading) { return <div>Loading...</div>; }
     return(
-      <div>
+      <div className="container">
          <h3>Assign "{this.props.data.list.name}":</h3>
          <form onSubmit={this.onSubmit.bind(this)}>
           <label>User Email:</label>

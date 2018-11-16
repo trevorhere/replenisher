@@ -25,7 +25,7 @@ class CreateList extends Component {
 
 render(){
   return(
-    <div>
+    <div className="container">
       <h3>Create New List</h3>
       <form onSubmit={this.onSubmit.bind(this)}>
       <label>List Name:</label>

@@ -53,7 +53,7 @@ constructor(props){
             return <div>Error: {error.message}</div>;
           }
           return (
-            <div>
+            <div className="container">
             <div style={style} className="">
             <h3>Task: {task.content}</h3>
             Status: {task.status}

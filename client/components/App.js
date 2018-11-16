@@ -29,7 +29,6 @@ const App = (props) => {
   return (
     <div>
       <Header />
-      <div className="container">
       < Switch>
           <Route path="/login" component={LoginForm} />
           <Route path="/signup" component={SignupForm} />
@@ -45,7 +44,6 @@ const App = (props) => {
           <Route path="/dashboard" component={requireAuth(Dashboard)} />
           <Route path="/" component= {HomePage}/>
       </ Switch>
-      </div>
     </div>
   );
 };

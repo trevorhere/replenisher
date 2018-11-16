@@ -10,7 +10,7 @@ class Dashboard extends Component {
     return items.map(({id, name}) => {
       return (
       <li key={id} className="collection-item">
-        <Link to={`/dashboard/${link}}/${id}`}>{name}</Link>
+        <Link to={`/dashboard/${link}/${id}`}>{name}</Link>
       </li>
       );
     });

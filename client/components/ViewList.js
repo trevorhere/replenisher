@@ -190,7 +190,7 @@ class ViewList extends Component{
 
 
           return (
-            <div>
+      <div className="container">
             <h3>List: {list.name}</h3>
             <hr/>
             {renderUnderway}

@@ -44,7 +44,7 @@ class ViewTeam extends Component{
 
           const { team } = data;
           return (
-            <div>
+            <div className="container">
             <h3>Team: {team.name}</h3>
             <ul className="collection">
             { this.renderTeam(team)}

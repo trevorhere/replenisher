@@ -26,7 +26,7 @@ class ViewUser extends Component{
     if (!userID) { return (<Loading loading={userID}/>); }
 
     return (
-        <div>
+      <div className="container">
           <h3>User Profile:</h3>
           Name: {userID.name}
           <br/>
