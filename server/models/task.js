@@ -55,6 +55,41 @@ TaskSchema.statics.changeTaskStatus = function(taskID, status, started, finished
         .then(([task]) => task);
       })
 }
+TaskSchema.statics.duplicateRecurringTask = function(taskID, status, started, finished){
+  const taskModel = mongoose.model('task');
+  console.log('save hit')
+  return this.findById(taskID)
+    .then(task => {
+      const newTask = new taskModel({
+        status,
+        started,
+        finished,
+        content: task.content,
+        list: task.list,
+        rank: task.rank,
+        created: task.created,
+        notes: task.notes,
+        feedback: task.feedback,
+        priority: task.priority,
+        creator: task.creator,
+        owner: task.owner,
+        recurring: false,
+        kill: task.kill,
+        repeat: task.repeat,
+        dueDate: task.dueDate,
+        timeDue: task.timeDue,
+        durationHours: task.durationHours,
+        durationMinutes: task.durationMinutes,
+        recurringInterval: task.recurringInterval,
+        recurringDeathMultiplier:task.recurringDeathMultiplier,
+        recurringDeathNumber:task.recurringDeathNumber,
+        recurringMultiplier:task.recurringMultiplier
+      })
+      return Promise.all([newTask.save()])
+      .then(([task]) => task);
+    })
+
+}
 
 TaskSchema.statics.removeTask = function(taskID){
   return this.findByIdAndRemove(taskID)

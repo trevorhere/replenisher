@@ -4,6 +4,7 @@ import { graphql, Query, compose } from 'react-apollo';
 import query from '../gql/queries/fetchList';
 import changeTaskStatus from '../gql/mutations/ChangeTaskStatus';
 import setRecurringFalse from '../gql/mutations/SetRecurringFalse';
+import duplicateRecurringTask from '../gql/mutations/DuplicateRecurringTask';
 import Loading from './Loading'
 const moment = require('moment');
 
@@ -25,7 +26,7 @@ class ViewList extends Component{
 
   renderTasks(tasks, refetch){
     return ( tasks ?
-      tasks.map(({id, content, status, started, finished, priority, durationHours, durationMinutes }) => {
+      tasks.map(({id, content, status, started, finished, priority, durationHours, durationMinutes, recurring }) => {
       return (
       <li key={id} className="collection-item ">
         <Link to={`/dashboard/list/${this.props.match.params.listID}/task/${id}`} >{content}</Link>
@@ -40,19 +41,19 @@ class ViewList extends Component{
               <div>
                 <i
                   className="material-icons"
-                  onClick={() => {this.changeTaskStatus(id, "complete", started, moment().format('MM/DD/YY, HH:mm')); refetch();}}
+                  onClick={() => {this.changeTaskStatus(id, "complete", started, moment().format('MM/DD/YY, HH:mm'), recurring); refetch();}}
                   style={{paddingLeft:"10px"}}
                 > done</i>
               </div> :
               <div>
                 <i
                   className="material-icons"
-                  onClick={() => {this.changeTaskStatus(id, "underway", moment().format('MM/DD/YY, HH:mm'), finished); refetch();}}
+                  onClick={() => {this.changeTaskStatus(id, "underway", moment().format('MM/DD/YY, HH:mm'), finished, recurring); refetch();}}
                   style={{paddingLeft:"10px"}}
                  >add</i>
                 <i
                   className="material-icons"
-                  onClick={() => {this.changeTaskStatus(id, "complete", started, moment().format('MM/DD/YY, HH:mm')); refetch();}}
+                  onClick={() => {this.changeTaskStatus(id, "complete", started, moment().format('MM/DD/YY, HH:mm'), recurring); refetch();}}
                   style={{paddingLeft:"10px"}}
                 > done</i>
               </div>
@@ -66,10 +67,20 @@ class ViewList extends Component{
       )}) : <div> No tasks. </div> )}
 
 
-    changeTaskStatus(taskID, status, started, finished){
+    changeTaskStatus(taskID, status, started, finished, recurring){
+
+      if(recurring && status == "complete"){
         this.props.ChangeTaskStatus({
           variables: { taskID, status, started , finished }
         })
+        this.props.DuplicateRecurringTask({
+          variables: { taskID, status: "complete", started , finished }
+        })
+      } else {
+        this.props.ChangeTaskStatus({
+          variables: { taskID, status, started , finished }
+        })
+      }
     }
 
 
@@ -190,7 +201,7 @@ class ViewList extends Component{
 
 
           return (
-      <div className="container">
+            <div className="container">
             <h3>List: {list.name}</h3>
             <hr/>
             {renderUnderway}
@@ -230,4 +241,5 @@ class ViewList extends Component{
 export default compose(
   graphql(changeTaskStatus, {name: "ChangeTaskStatus"}),
   graphql(setRecurringFalse, {name: "SetRecurringFalse"}),
+  graphql(duplicateRecurringTask, {name: "DuplicateRecurringTask"})
   )(ViewList)

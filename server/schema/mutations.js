@@ -196,7 +196,6 @@ const mutation = new GraphQLObjectType({
         return Task.setRecurringFalse(taskID);
       }
     },
-
     changeTaskStatus: {
       type: TaskType,
       args: {
@@ -209,6 +208,18 @@ const mutation = new GraphQLObjectType({
         return Task.changeTaskStatus(taskID, status, started, finished);
       }
     },
+    duplicateRecurringTask: {
+      type: TaskType,
+      args: {
+        taskID: { type: GraphQLID },
+        status: { type: GraphQLString },
+        started: { type: GraphQLString },
+        finished: { type: GraphQLString },
+      },
+      resolve(parentValue, {taskID, status, started, finished}){
+        return Task.duplicateRecurringTask(taskID, status, started, finished);
+    }
+  },
     createList: {
       type: ListType,
       args: {

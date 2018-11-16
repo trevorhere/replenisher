@@ -5,6 +5,7 @@ import background from "../assets/city.jpeg";
 const componentStyle={
   background: "url("+ background +") no-repeat center center fixed",
   height: "93vh",
+  backgroundSize: "cover",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
