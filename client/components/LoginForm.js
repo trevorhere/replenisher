@@ -29,8 +29,6 @@ class LoginForm extends Component {
       variables: {email, password},
       refetchQueries: [{ query }]
     })
-
-
   }
 
   render(){

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {graphql} from 'react-apollo';
 import mutation from '../gql/mutations/CreateTeam';
-import query from '../gql/queries/fetchLists';
+import query from '../gql/queries/Dashboard';
 import { Link } from 'react-router-dom';
 
 

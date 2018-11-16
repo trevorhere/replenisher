@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {graphql} from 'react-apollo';
 import { Link } from 'react-router-dom';
 import mutation from '../gql/mutations/CreateList';
-import query from '../gql/queries/fetchLists';
+import query from '../gql/queries/Dashboard';
 
 
 class CreateList extends Component {

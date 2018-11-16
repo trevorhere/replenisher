@@ -22,27 +22,10 @@ class ViewList extends Component{
     }
   }
 
-  changeTaskStatus(taskID, status, started, finished){
-
-    if(status == "pending"){
-      this.props.ChangeTaskStatus({
-        variables: { taskID, status, started: "N/A" , finished: "N/A"}})
-      }
-      else if(status == "underway")
-      {
-        this.props.ChangeTaskStatus({
-          variables: { taskID, status, started:moment().format('MM/DD/YY, HH:mm'), finished }})
-      }
-      else if(status == "complete")
-      {
-        this.props.ChangeTaskStatus({
-          variables: { taskID, status, started, finished:moment().format('MM/DD/YY, HH:mm') }})
-      }
-  }
 
   renderTasks(tasks, refetch){
     return ( tasks ?
-      tasks.map(({id, content, status, started, finished, priority, durationHours, durationMinutes, created }) => {
+      tasks.map(({id, content, status, started, finished, priority, durationHours, durationMinutes }) => {
       return (
       <li key={id} className="collection-item ">
         <Link to={`/dashboard/list/${this.props.match.params.listID}/task/${id}`} >{content}</Link>
@@ -57,19 +40,19 @@ class ViewList extends Component{
               <div>
                 <i
                   className="material-icons"
-                  onClick={() => {this.changeTaskStatus(id, "complete", started, finished); refetch();}}
+                  onClick={() => {this.changeTaskStatus(id, "complete", started, moment().format('MM/DD/YY, HH:mm')); refetch();}}
                   style={{paddingLeft:"10px"}}
                 > done</i>
               </div> :
               <div>
                 <i
                   className="material-icons"
-                  onClick={() => {this.changeTaskStatus(id, "underway", started, finished); refetch();}}
+                  onClick={() => {this.changeTaskStatus(id, "underway", moment().format('MM/DD/YY, HH:mm'), finished); refetch();}}
                   style={{paddingLeft:"10px"}}
                  >add</i>
                 <i
                   className="material-icons"
-                  onClick={() => {this.changeTaskStatus(id, "complete", started, finished); refetch();}}
+                  onClick={() => {this.changeTaskStatus(id, "complete", started, moment().format('MM/DD/YY, HH:mm')); refetch();}}
                   style={{paddingLeft:"10px"}}
                 > done</i>
               </div>
@@ -81,6 +64,13 @@ class ViewList extends Component{
         </div>
       </li>
       )}) : <div> No tasks. </div> )}
+
+
+    changeTaskStatus(taskID, status, started, finished){
+        this.props.ChangeTaskStatus({
+          variables: { taskID, status, started , finished }
+        })
+    }
 
 
     filteredTasks(list, filter){

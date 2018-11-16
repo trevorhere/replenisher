@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { css } from 'react-emotion';
 import { PacmanLoader } from 'react-spinners';
 
-
 const override = css`
     display: block;
     margin: 0 auto;
